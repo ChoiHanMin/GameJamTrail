@@ -14,6 +14,7 @@ build/
 Library/
 Logs/
 UserSettings/
+Temp/
 
 
 # ignore doc/notes.txt, but not doc/server/arch.txt
