@@ -5,17 +5,17 @@ using System.IO;
 using System.Text;
 using System.Linq;
 
-[System.Serializable]
-public class UserInfoClass
-{
-    public string UserName;
-    public float ClearTime;
+//[System.Serializable]
+//public class UserInfoClass
+//{
+//    public string UserName;
+//    public float ClearTime;
 
-    public UserInfoClass(string userName, float time) {
-        this.UserName = userName;
-        this.ClearTime = time;
-    }
-}
+//    public UserInfoClass(string userName, float time) {
+//        this.UserName = userName;
+//        this.ClearTime = time;
+//    }
+//}
 
 public class JSon : MonoBehaviour
 {
