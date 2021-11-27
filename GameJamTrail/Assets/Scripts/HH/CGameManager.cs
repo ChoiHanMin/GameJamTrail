@@ -27,7 +27,7 @@ public class CGameManager : MonoBehaviour
     // 1√ ø° 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
-    [SerializeField] private float kms = 10;
+    [SerializeField] private float kms = 0f;
     [SerializeField] private CTrain[] trains;
     [SerializeField] private RectTransform graduation;
 
@@ -47,11 +47,15 @@ public class CGameManager : MonoBehaviour
     [SerializeField] private bool firstTrainMove = false;
     [SerializeField] private bool firstTrainMoveEnd = false;
     [SerializeField] private float zPos = 0f;
+    [SerializeField] private Text speedText;
     private float firstSpeed = 0f;
 
 
     private float GameTimer;
     private bool bIsGameStart;
+
+
+
     public Text TimerText;
 
     public float GetGameTime()
@@ -104,31 +108,34 @@ public class CGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
         {
             firstTrainMove = true;
+            
         }
 
         if (firstTrainMove && !firstTrainMoveEnd)
         {
-            zPos += firstSpeed * Time.deltaTime;
-            Debug.Log(" firstSpeed : " + firstSpeed);
-            if (firstSpeed < 10f)
+            zPos += kms * Time.deltaTime;
+            if (kms < 10f)
             {
-                firstSpeed += 0.07f;
+                kms += 0.07f;
             }
             else
             {
-                firstSpeed = 10f;
+                kms = 10f;
             }
+
             if (zPos >= 3f)
             {
                 zPos = 3f;
                 isMove = true;
                 firstTrainMoveEnd = true;
+                bIsGameStart = true;
             }
             for (int i = 0; i < trains.Length; i++)
             {
                 trains[i].FirstMove(zPos, i);
             }
 
+            KmToString();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -136,6 +143,7 @@ public class CGameManager : MonoBehaviour
             {
                 level++;
                 kms = kmsLevel[level];
+                KmToString();
             }
         }
 
@@ -145,6 +153,7 @@ public class CGameManager : MonoBehaviour
             {
                 level--;
                 kms = kmsLevel[level];
+                KmToString();
             }
         }
 
@@ -202,6 +211,19 @@ public class CGameManager : MonoBehaviour
         }
     }
 
+    private void KmToString()
+    {
+        float speedX;
+        if (kms > 10)
+        {
+            speedX = 100 + (kms % 10f) * 20f;
+        }
+        else
+        {
+            speedX = kms * 10f;
+        }
+        speedText.text = speedX.ToString("#0") + "Km";
+    }
     public void NextJump(int num)
     {
         if (num + 1 < trains.Length)

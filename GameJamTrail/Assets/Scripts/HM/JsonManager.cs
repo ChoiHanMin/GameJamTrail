@@ -35,7 +35,14 @@ public class JsonManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(gameObject);
 
         //HM_ADD
