@@ -9,17 +9,9 @@ using System.IO;
 using System.Text;
 using System.Linq;
 
-[System.Serializable]
-public class UserInfoClass
+public interface IMove
 {
-    public string UserName;
-    public float ClearTime;
-
-    public UserInfoClass(string userName, float time)
-    {
-        this.UserName = userName;
-        this.ClearTime = time;
-    }
+    void Move(float movePos);
 }
 
 
@@ -57,14 +49,15 @@ public class CGameManager : MonoBehaviour
     [SerializeField] private float zPos = 0f;
     private float firstSpeed = 0f;
 
-    //HM_ADD
-    [Header("HM_ADD=====================")]
-    // HM_ADD
-    public List<UserInfoClass> UserList;
+
     private float GameTimer;
     private bool bIsGameStart;
     public Text TimerText;
-    public string UserName;
+
+    public float GetGameTime()
+    {
+        return GameTimer;
+    }
 
     public void AddMove(IMove move)
     {
@@ -81,19 +74,6 @@ public class CGameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
-
-        //HM_ADD
-        var SaveData = LoadJsonFile<List<UserInfoClass>>(Application.dataPath, "JTestClass");
-
-        if (SaveData == null)
-        {
-            UserList = new List<UserInfoClass>();
-        }
-        else
-        {
-            UserList = SaveData;
-        }
-
     }
 
 
@@ -229,34 +209,4 @@ public class CGameManager : MonoBehaviour
             trains[num + 1].Jump();
         }
     }
-
-
-
-    //HM_ADD
-
-    private void OnDestroy()
-    {
-        string SaveString = UserList.ToJosnString();
-        CreateJsonFile(Application.dataPath, "JTestClass", SaveString);
-    }
-
-    void CreateJsonFile(string createPath, string fileName, string jsonData)
-    {
-        FileStream fileStream = new FileStream(string.Format("{0}/{1}.json", createPath, fileName), FileMode.Create);
-        byte[] data = Encoding.UTF8.GetBytes(jsonData);
-        fileStream.Write(data, 0, data.Length);
-        fileStream.Close();
-    }
-
-    T LoadJsonFile<T>(string loadPath, string fileName)
-    {
-        FileStream fileStream = new FileStream(string.Format("{0}/{1}.json", loadPath, fileName), FileMode.Open);
-        byte[] data = new byte[fileStream.Length];
-        fileStream.Read(data, 0, data.Length);
-        fileStream.Close();
-        string jsonData = Encoding.UTF8.GetString(data);
-        return jsonData.ToJosnData<T>();
-    }
-
-
 }
