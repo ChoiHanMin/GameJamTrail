@@ -337,6 +337,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 663860452, guid: f9e530099d298a145b449d0cfc698857, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1949036555, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: Jsonmng
       value: 
@@ -428,10 +432,6 @@ PrefabInstance:
     - target: {fileID: 5035535755237852342, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: m_Name
       value: LoginCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5804640756405938510, guid: f9e530099d298a145b449d0cfc698857, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9e530099d298a145b449d0cfc698857, type: 3}

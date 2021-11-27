@@ -70,7 +70,7 @@ public class JsonManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            MessageDispatcher.SendMessage("SetUserInfos");
+            MessageDispatcher.SendMessage("ShowRank");
         }
     }
 
