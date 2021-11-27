@@ -5,15 +5,14 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 
-public class CGameManager_HM : MonoBehaviour
+public class CGameManager : MonoBehaviour
 {
-    private static CGameManager_HM instance;
-    public static CGameManager_HM Instance { get { return instance; } }
+    private static CGameManager instance;
+    public static CGameManager Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
 
     private bool isMove = false;
-<<<<<<< HEAD
     // 1ÃÊ¿¡ 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
@@ -21,17 +20,13 @@ public class CGameManager_HM : MonoBehaviour
 
     private float[] kmsLevel = { 1f, 5f, 10f, 15f };
     private int level = 0;
-        
-=======
+
     private float spped = 1f;
 
 
     // MH_ADD
     private float GameTimer;
     public Text TimeText;
-    // public Text[] ScrambleTexts;
-    //Coroutine Timer;
->>>>>>> e19b129c32c51deefbccf81d4693a46aee7a75a0
 
     public void AddMove(IMove move)
     {
