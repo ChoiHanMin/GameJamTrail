@@ -9,10 +9,10 @@ public interface IMove
 
 
 
-public class CGameManager_HM : MonoBehaviour
+public class CGameManager : MonoBehaviour
 {
-    private static CGameManager_HM instance;
-    public static CGameManager_HM Instance { get { return instance; } }
+    private static CGameManager instance;
+    public static CGameManager Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
 
