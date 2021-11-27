@@ -1,22 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public interface IMove
+
+public class CGameManager_HM : MonoBehaviour
 {
-    void Move(float movePos);
-}
-
-
-
-public class CGameManager : MonoBehaviour
-{
-    private static CGameManager instance;
-    public static CGameManager Instance { get { return instance; } }
+    private static CGameManager_HM instance;
+    public static CGameManager_HM Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
 
     private bool isMove = false;
+<<<<<<< HEAD
     // 1ÃÊ¿¡ 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
@@ -25,6 +22,16 @@ public class CGameManager : MonoBehaviour
     private float[] kmsLevel = { 1f, 5f, 10f, 15f };
     private int level = 0;
         
+=======
+    private float spped = 1f;
+
+
+    // MH_ADD
+    private float GameTimer;
+    public Text TimeText;
+    // public Text[] ScrambleTexts;
+    //Coroutine Timer;
+>>>>>>> e19b129c32c51deefbccf81d4693a46aee7a75a0
 
     public void AddMove(IMove move)
     {
@@ -45,7 +52,7 @@ public class CGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Timer = StartCoroutine("TimerSet");
     }
 
     // Update is called once per frame
@@ -55,30 +62,30 @@ public class CGameManager : MonoBehaviour
         {
             for (int i = 0; i < moveList.Count; i++)
             {
-                moveList[i].Move(Time.deltaTime * speed * kms);
+                moveList[i].Move(0);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GameTimer < 30)
         {
-            isMove = !isMove;
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (level < kmsLevel.Length - 1)
-            {
-                level++;
-                kms = kmsLevel[level];
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (level > 0)
-            {
-                level--;
-                kms = kmsLevel[level];
-            }
+            GameTimer += Time.deltaTime;
+            TimeText.text = string.Format("{0:N2}", GameTimer);
         }
     }
+
+
+
+    //IEnumerator TimerSet()
+    //{
+    //    for (int i = 0; i < ScrambleTexts.Length; i++)
+    //    {
+    //        ScrambleTexts[i].GetComponent<DOTweenAnimation>().DOPlay();
+    //    }
+
+    //    while (Time < 30)
+    //    {
+    //        Time++;
+    //        TimeText.text = Time.ToString();
+    //        yield return new WaitForSeconds(1.0f);
+    //    }
+    //}
 }
