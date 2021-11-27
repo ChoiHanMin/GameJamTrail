@@ -24,6 +24,8 @@ public class CGameManager : MonoBehaviour
 
     private List<IMove> moveList = new List<IMove>();
     [SerializeField] private bool isMove = false;
+
+
     // 1√ ø° 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
@@ -49,28 +51,43 @@ public class CGameManager : MonoBehaviour
     [SerializeField] private float zPos = 0f;
     [SerializeField] private Text speedText;
     private float firstSpeed = 0f;
-
+    private bool finish = false;
 
     private float GameTimer;
     private bool bIsGameStart;
 
-
+    private float moveM = 0f;
 
     public Text TimerText;
+
+    public float sensitivity = 100;
+    public float loudness = 0;
+
 
     public float GetGameTime()
     {
         return GameTimer;
     }
 
+    public float MoveM()
+    {
+        return moveM;
+    }
+
     public void AddMove(IMove move)
     {
-        moveList.Add(move);
+        if (!moveList.Contains(move))
+        {
+            moveList.Add(move);
+        }
     }
 
     public void RemoveMove(IMove move)
     {
-        moveList.Remove(move);
+        if (moveList.Contains(move))
+        {
+            moveList.Remove(move);
+        }
     }
 
     private void Awake()
@@ -101,12 +118,18 @@ public class CGameManager : MonoBehaviour
             TimerText.text = string.Format("{0:N2}", GameTimer);
         }
 
-        if (isMove && firstTrainMoveEnd)
+        if (isMove && firstTrainMoveEnd && !finish)
         {
+            float nextPos = Time.deltaTime * speed * kms;
             for (int i = 0; i < moveList.Count; i++)
             {
-                moveList[i].Move(Time.deltaTime * spped * kms);
+                moveList[i].Move(nextPos);
             }
+
+            //Debug.Log("GGG " + nextPos);
+
+
+            moveM += Time.deltaTime * speed * kms;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
@@ -214,7 +237,7 @@ public class CGameManager : MonoBehaviour
             audioSource.Play();
         }
 
-        if (isDamage)
+        if (isDamage && !finish)
         {
             damageTime += Time.deltaTime;
             if (damageTime > damageEndTime)
@@ -235,6 +258,7 @@ public class CGameManager : MonoBehaviour
             {
                 moveList[i].Move(Time.deltaTime * spped * kms);
             }
+            moveM += Time.deltaTime * speed * kms;
             KmToString();
         }
 
@@ -247,6 +271,23 @@ public class CGameManager : MonoBehaviour
         {
             trains[0].DangerShout();
         }
+
+        if (finish)
+        {
+            for (int i = 0; i < trains.Length; i++)
+            {
+                trains[i].FinishToMove(kms * Time.deltaTime);
+            }
+        }
+
+        loudness = GetAveragedVolume() * sensitivity;
+
+        if (!finish && loudness > 1.5f)
+        {
+            Debug.Log(" loudness " + loudness);
+            trains[0].DangerShout();
+        }
+
     }
 
     private void KmToString()
@@ -297,5 +338,24 @@ public class CGameManager : MonoBehaviour
             sickImage.sprite = character;
             sickAni.SetTrigger("Start");
         }
+    }
+
+    public void Finish()
+    {
+        isMove = !isMove;
+        finish = true;
+        bIsGameStart = false;
+    }
+
+    public float GetAveragedVolume()
+    {
+        float[] data = new float[256];
+        float a = 0;
+        audioSource.GetOutputData(data, 0);
+        foreach (float s in data)
+        {
+            a += Mathf.Abs(s);
+        }
+        return a / 256;
     }
 }

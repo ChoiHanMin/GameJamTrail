@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 7591450928648348476}
   - component: {fileID: 1057588568020935903}
   - component: {fileID: 7004367091434583237}
+  - component: {fileID: 3751907300643366683}
   m_Layer: 0
   m_Name: RabbitEvade
   m_TagString: Character
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sickSprite: {fileID: 21300000, guid: 66cfad60ad1cb9044b1552b74845b7c6, type: 3}
   evadeAni: {fileID: 7591450928648348476}
+  objectMove: {fileID: 3751907300643366683}
 --- !u!65 &7004367091434583237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -181,6 +183,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.2, z: 0.12}
   m_Center: {x: 0, y: 0.33, z: 0}
+--- !u!114 &3751907300643366683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195465696356793327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b764bd949c441f9449e3254e54e5339d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7673938117819557463
 GameObject:
   m_ObjectHideFlags: 0
