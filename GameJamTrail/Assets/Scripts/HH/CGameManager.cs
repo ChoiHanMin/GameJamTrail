@@ -32,7 +32,7 @@ public class CGameManager : MonoBehaviour
     [SerializeField] private RectTransform graduation;
 
     private float[] kmsLevel = { 1f, 5f, 10f, 15f };
-    private int level = 0;
+    private int level = 2;
 
     private float spped = 1f;
 
@@ -111,7 +111,7 @@ public class CGameManager : MonoBehaviour
             
         }
 
-        if (firstTrainMove && !firstTrainMoveEnd)
+        if (firstTrainMove && !firstTrainMoveEnd && !isDamage)
         {
             zPos += kms * Time.deltaTime;
             if (kms < 10f)
@@ -137,24 +137,24 @@ public class CGameManager : MonoBehaviour
             trains[2].AniStart();
             KmToString();
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && firstTrainMove && firstTrainMoveEnd)
         {
             if (level < kmsLevel.Length - 1)
             {
                 level++;
-                kms = kmsLevel[level];
-                KmToString();
             }
+            kms = kmsLevel[level];
+            KmToString();
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && firstTrainMove && firstTrainMoveEnd)
         {
             if (level > 0)
             {
                 level--;
-                kms = kmsLevel[level];
-                KmToString();
             }
+            kms = kmsLevel[level];
+            KmToString();
         }
 
         if (Input.GetKeyDown(KeyCode.F12))// && !jump)
@@ -209,6 +209,35 @@ public class CGameManager : MonoBehaviour
             audioSource.clip = audioClip;
             audioSource.Play();
         }
+
+        if (isDamage)
+        {
+            damageTime += Time.deltaTime;
+            if (damageTime > damageEndTime)
+            {
+                damageTime = 0f;
+                isDamage = false;
+
+                kms = kmsLevel[level];
+                KmToString();
+
+                for (int i = 0; i < trains.Length; i++)
+                {
+                    trains[i].Damage(false);
+                }
+            }
+
+            for (int i = 0; i < moveList.Count; i++)
+            {
+                moveList[i].Move(Time.deltaTime * spped * kms);
+            }
+            KmToString();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TrainDamage();
+        }
     }
 
     private void KmToString()
@@ -230,6 +259,22 @@ public class CGameManager : MonoBehaviour
         if (num + 1 < trains.Length)
         {
             trains[num + 1].Jump();
+        }
+    }
+
+    private bool isDamage = false;
+    private float damageEndTime = 3f;
+    private float damageTime = 0f;
+
+    public void TrainDamage()
+    {
+        for (int i = 0; i < trains.Length; i++)
+        {
+            trains[i].Damage(true);
+            damageTime = 0f;
+            isDamage = true;
+            kms = 1f;
+            firstTrainMoveEnd = false;
         }
     }
 }

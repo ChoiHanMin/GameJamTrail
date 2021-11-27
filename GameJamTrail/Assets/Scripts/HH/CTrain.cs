@@ -18,6 +18,10 @@ public class CTrain : MonoBehaviour
 
     private float ani1 = 0f;
 
+    private bool waitHuddleDamage = true;
+
+    private bool firstTrain = false;
+
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
@@ -27,6 +31,7 @@ public class CTrain : MonoBehaviour
     public void FirstMove(float moveZPos, int num)
     {
         this.num = num;
+        firstTrain = num == 0;
         transform.position = new Vector3(transform.position.x, transform.position.y, zPos + moveZPos);
     }
 
@@ -35,7 +40,13 @@ public class CTrain : MonoBehaviour
         if (trainJumpAni.GetCurrentAnimatorStateInfo(0).IsName("TrainWait"))
         {
             trainJumpAni.SetTrigger("Jump");
+            waitHuddleDamage = false;
         }
+    }
+
+    public void JumpEnd()
+    {
+        waitHuddleDamage = true;
     }
     public bool IsJump()
     {
@@ -77,9 +88,25 @@ public class CTrain : MonoBehaviour
             if (time > actionSpeed)
             {
                 time = 0f;
-                tr.rotation = Quaternion.Euler(new Vector3(0f, ani1, 0f));
+                tr.localRotation = Quaternion.Euler(new Vector3(0f, ani1, 0f));
                 ani1 = ani1 == 0 ? 180f : 0f;
             }
         }
     }
+    [SerializeField] private bool isDamage = false;
+    public void Damage(bool damage)
+    {
+        isDamage = damage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDamage) return;
+        if (other.tag == "Huddle" && waitHuddleDamage && firstTrain)
+        {
+            CGameManager.Instance.TrainDamage();
+        }
+
+    }
+
 }
