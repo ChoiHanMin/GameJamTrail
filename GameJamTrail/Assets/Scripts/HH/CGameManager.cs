@@ -134,7 +134,7 @@ public class CGameManager : MonoBehaviour
             {
                 trains[i].FirstMove(zPos, i);
             }
-
+            trains[2].AniStart();
             KmToString();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -221,8 +221,9 @@ public class CGameManager : MonoBehaviour
         else
         {
             speedX = kms * 10f;
-        }
+        } 
         speedText.text = speedX.ToString("#0") + "Km";
+        trains[2].SpeedChange(kms);
     }
     public void NextJump(int num)
     {

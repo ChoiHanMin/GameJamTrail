@@ -8,6 +8,16 @@ public class CTrain : MonoBehaviour
     private Animator trainJumpAni;
     private float zPos = 0f;
     private int num = 0;
+
+    [SerializeField] private Transform tr;
+
+    private bool action = false;
+
+    private float actionSpeed = 1f;
+    private float time = 0f;
+
+    private float ani1 = 0f;
+
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
@@ -32,6 +42,27 @@ public class CTrain : MonoBehaviour
         return !trainJumpAni.GetCurrentAnimatorStateInfo(0).IsName("TrainWait");
     }
 
+    public void AniStart()
+    {
+        action = true;
+        ani1 = 0f;
+    }
+    public void SpeedChange(float speed)
+    {
+        if(speed > 10)
+        {
+            actionSpeed = 0.2f;
+        }
+        else if (speed < 10)
+        {
+            actionSpeed = 0.5f;
+        }
+        else
+        {
+            actionSpeed = 0.35f;
+        }
+    }
+
     public void NextJump()
     {
         CGameManager.Instance.NextJump(num);
@@ -40,6 +71,15 @@ public class CTrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (action)
+        {
+            time += Time.deltaTime;
+            if (time > actionSpeed)
+            {
+                time = 0f;
+                tr.rotation = Quaternion.Euler(new Vector3(0f, ani1, 0f));
+                ani1 = ani1 == 0 ? 180f : 0f;
+            }
+        }
     }
 }
