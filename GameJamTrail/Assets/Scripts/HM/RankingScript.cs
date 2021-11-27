@@ -7,7 +7,6 @@ using com.ootii.Messages;
 
 public class RankingScript : MonoBehaviour
 {
-    public JSon Jsons;
     public Text[] UserNames;
     public Text[] ClearTimes;
 
@@ -34,9 +33,9 @@ public class RankingScript : MonoBehaviour
         {
             for (int i = 0; i < UserNames.Length; i++)
             {
-                if (Jsons.aaa.Count - 1 >= i)
+                if (JsonManager.Instance.UserList.Count - 1 >= i)
                 {
-                    UserNames[i].text = Jsons.aaa[i].UserName;
+                    UserNames[i].text = JsonManager.Instance.UserList[i].UserName;
                 }
                 else
                 {
@@ -49,9 +48,9 @@ public class RankingScript : MonoBehaviour
         {
             for (int i = 0; i < ClearTimes.Length; i++)
             {
-                if (Jsons.aaa.Count - 1 >= i)
+                if (JsonManager.Instance.UserList.Count - 1 >= i)
                 {
-                    ClearTimes[i].text = Jsons.aaa[i].ClearTime.ToString();
+                    ClearTimes[i].text = JsonManager.Instance.UserList[i].ClearTime.ToString();
                 }
                 else
                 {

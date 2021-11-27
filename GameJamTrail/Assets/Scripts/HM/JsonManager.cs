@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using com.ootii.Messages;
 
 //HM_ADD
 using System.IO;
@@ -36,7 +37,7 @@ public class JsonManager : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
-     
+
         //HM_ADD
         var SaveData = LoadJsonFile<List<UserInfoClass>>(Application.dataPath, "JTestClass");
 
@@ -60,6 +61,10 @@ public class JsonManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MessageDispatcher.SendMessage("SetUserInfos");
+        }
     }
 
     private void OnDestroy()
