@@ -1,23 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public interface IMove
+
+public class CGameManager_HM : MonoBehaviour
 {
-    void Move(float movePos);
-}
-
-
-
-public class CGameManager : MonoBehaviour
-{
-    private static CGameManager instance;
-    public static CGameManager Instance { get { return instance; } }
+    private static CGameManager_HM instance;
+    public static CGameManager_HM Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
 
     private bool isMove = false;
     private float spped = 1f;
+
+
+    // MH_ADD
+    private float GameTimer;
+    public Text TimeText;
+    // public Text[] ScrambleTexts;
+    //Coroutine Timer;
+
     public void AddMove(IMove move)
     {
         moveList.Add(move);
@@ -37,7 +41,7 @@ public class CGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Timer = StartCoroutine("TimerSet");
     }
 
     // Update is called once per frame
@@ -50,5 +54,27 @@ public class CGameManager : MonoBehaviour
                 moveList[i].Move(0);
             }
         }
+        if (GameTimer < 30)
+        {
+            GameTimer += Time.deltaTime;
+            TimeText.text = string.Format("{0:N2}", GameTimer);
+        }
     }
+
+
+
+    //IEnumerator TimerSet()
+    //{
+    //    for (int i = 0; i < ScrambleTexts.Length; i++)
+    //    {
+    //        ScrambleTexts[i].GetComponent<DOTweenAnimation>().DOPlay();
+    //    }
+
+    //    while (Time < 30)
+    //    {
+    //        Time++;
+    //        TimeText.text = Time.ToString();
+    //        yield return new WaitForSeconds(1.0f);
+    //    }
+    //}
 }
