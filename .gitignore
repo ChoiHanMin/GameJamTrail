@@ -1,8 +1,9 @@
 # : comments
 
 # no .a files
-.vsconfig
-.sln
+*.vsconfig
+*.sln
+*.csproj
 
 # but do track lib.a, even though you're ignoring .a files above
 
@@ -15,9 +16,10 @@ Library/
 Logs/
 UserSettings/
 Temp/
-obj/
+.vs/
 
 # ignore doc/notes.txt, but not doc/server/arch.txt
 
 
 # ignore all .pdf files in the doc/ directory
+GameJamTrail/*.csproj
