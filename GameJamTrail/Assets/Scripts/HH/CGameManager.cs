@@ -24,7 +24,7 @@ public class CGameManager : MonoBehaviour
     private float speed = 1f;
     [Range(1f, 120f)]
     [SerializeField] private float kms = 10;
-    [SerializeField] private CTrain train;
+    [SerializeField] private CTrain[] trains;
     [SerializeField] private RectTransform graduation;
 
     private float[] kmsLevel = { 1f, 5f, 10f, 15f };
@@ -40,6 +40,9 @@ public class CGameManager : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip audioClip;
 
+    private bool firstTrainMove = false;
+    private bool firstTrainMoveEnd = false;
+    private float zPos = 0f;
 
     //HM_ADD
     [Header("HM_ADD=====================")]
@@ -91,6 +94,23 @@ public class CGameManager : MonoBehaviour
             }
         }
 
+        if (firstTrainMove && !firstTrainMoveEnd && Input.GetKeyDown(KeyCode.Space))
+        {
+            zPos += 10f * Time.deltaTime;
+            if (zPos >= 3f)
+            {
+                zPos = 3f;
+                isMove = true;
+                firstTrainMoveEnd = true;
+            }
+            for (int i = 0; i < trains.Length; i++)
+            {
+                trains[i].FirstMove(zPos);
+            }
+
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isMove = !isMove;
@@ -117,7 +137,7 @@ public class CGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F12))// && !jump)
         {
             //jump = true;
-            train.Jump();
+            //train.Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))

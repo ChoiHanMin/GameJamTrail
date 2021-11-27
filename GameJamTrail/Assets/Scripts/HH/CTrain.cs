@@ -6,9 +6,16 @@ public class CTrain : MonoBehaviour
 {
 
     private Animator trainJumpAni;
+    private float zPos = 0f;
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
+        zPos = transform.position.z;
+    }
+
+    public void FirstMove(float moveZPos)
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, zPos + moveZPos);
     }
 
     public void Jump()
