@@ -1260,6 +1260,7 @@ MonoBehaviour:
   - {fileID: 1316709142}
   - {fileID: 1434089232}
   - {fileID: 420911728}
+  riverNum: 2
 --- !u!4 &1740095758
 Transform:
   m_ObjectHideFlags: 0
