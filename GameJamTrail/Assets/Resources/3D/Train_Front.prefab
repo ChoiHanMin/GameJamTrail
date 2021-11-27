@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 8734363016986917501}
   - component: {fileID: 8258474511537147490}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: PpuPpu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1341,7 +1341,7 @@ GameObject:
   - component: {fileID: 2792502639207999693}
   - component: {fileID: 6153754628231468513}
   m_Layer: 0
-  m_Name: Mesh80
+  m_Name: Train_Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2747,7 +2747,7 @@ GameObject:
   - component: {fileID: 8775401029970415713}
   - component: {fileID: 2918352894011223138}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Train_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2769,7 +2769,7 @@ Transform:
   - {fileID: 7028663215740652758}
   m_Father: {fileID: 90162891728360170}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 3.1927404, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.6, y: 0, z: 0}
 --- !u!111 &2918352894011223138
 Animation:
   m_ObjectHideFlags: 0
