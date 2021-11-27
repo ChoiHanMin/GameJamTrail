@@ -68,6 +68,12 @@ public class JsonManager : MonoBehaviour
         CreateJsonFile(Application.dataPath, "JTestClass", SaveString);
     }
 
+    void SortUserList()
+    {
+        UserList.Add(new UserInfoClass(UserName, CGameManager.Instance.GetGameTime()));
+        UserList = UserList.OrderBy(x => x.ClearTime).ToList();
+    }
+
     void CreateJsonFile(string createPath, string fileName, string jsonData)
     {
         FileStream fileStream = new FileStream(string.Format("{0}/{1}.json", createPath, fileName), FileMode.Create);

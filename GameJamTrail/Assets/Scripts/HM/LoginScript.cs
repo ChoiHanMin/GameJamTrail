@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoginScript : MonoBehaviour
 {
     public InputField Nickname;
+    public JsonManager Jsonmng;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class LoginScript : MonoBehaviour
     {
         if ("".Equals(Nickname.text) == false)
         {
-           // GM.UserName = Nickname.text;
+            Jsonmng.UserName = Nickname.text;
             Debug.Log(Nickname.text);
             Application.LoadLevel("InGame");
         }

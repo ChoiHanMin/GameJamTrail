@@ -76,6 +76,11 @@ public class CGameManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void OnDestroy()
+    {
+        bIsGameStart = false;
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -176,5 +181,10 @@ public class CGameManager : MonoBehaviour
             audioSource.clip = audioClip;
             audioSource.Play();
         }
+    }
+
+   public float GetGameTime()
+    {
+        return GameTimer;
     }
 }

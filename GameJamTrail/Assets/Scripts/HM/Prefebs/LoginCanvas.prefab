@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Nickname: {fileID: 1726928533}
-  GM: {fileID: 0}
+  Jsonmng: {fileID: 0}
 --- !u!1 &5804640756405938510
 GameObject:
   m_ObjectHideFlags: 0
