@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using com.ootii.Messages;
 
 public interface IMove
 {
@@ -18,6 +20,13 @@ public class CGameManager_HM : MonoBehaviour
 
     private bool isMove = false;
     private float spped = 1f;
+
+    private float GameTimer;
+    private bool bIsGameover;
+    public Text TimerText;
+    public string UserName;
+
+    
     public void AddMove(IMove move)
     {
         moveList.Add(move);
@@ -49,6 +58,17 @@ public class CGameManager_HM : MonoBehaviour
             {
                 moveList[i].Move(0);
             }
+        }
+
+        if(!bIsGameover)
+        {
+            GameTimer += Time.deltaTime;
+            TimerText.text = string.Format("{0:N2}", GameTimer);
+        }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            MessageDispatcher.SendMessage("SetUserInfos");
         }
     }
 }
