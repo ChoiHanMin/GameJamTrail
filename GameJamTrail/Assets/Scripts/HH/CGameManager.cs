@@ -277,4 +277,13 @@ public class CGameManager : MonoBehaviour
             firstTrainMoveEnd = false;
         }
     }
+
+    [SerializeField] private Animator sickAni;
+    [SerializeField] private Image sickImage;
+
+    public void SickAniStart(Sprite character)
+    {
+        sickImage.sprite = character;
+        sickAni.SetTrigger("Start");
+    }
 }

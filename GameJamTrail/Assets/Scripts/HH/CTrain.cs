@@ -22,6 +22,7 @@ public class CTrain : MonoBehaviour
 
     private bool firstTrain = false;
 
+
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
