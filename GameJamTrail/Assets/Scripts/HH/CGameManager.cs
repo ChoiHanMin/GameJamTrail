@@ -78,6 +78,10 @@ public class CGameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = Microphone.Start(null, false, 999, 44100);
+        while (!(Microphone.GetPosition(null) > 0)) ;
+        audioSource.Play();
     }
 
 
@@ -157,7 +161,7 @@ public class CGameManager : MonoBehaviour
             KmToString();
         }
 
-        if (Input.GetKeyDown(KeyCode.F12))// && !jump)
+        if (Input.GetKeyDown(KeyCode.F12) && !isDamage)// && !jump)
         {
             bool jumping = false;
             for (int i = 0; i < trains.Length; i++)
@@ -238,6 +242,11 @@ public class CGameManager : MonoBehaviour
         {
             TrainDamage();
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            trains[0].DangerShout();
+        }
     }
 
     private void KmToString()
@@ -283,7 +292,10 @@ public class CGameManager : MonoBehaviour
 
     public void SickAniStart(Sprite character)
     {
-        sickImage.sprite = character;
-        sickAni.SetTrigger("Start");
+        if (sickAni.GetCurrentAnimatorStateInfo(0).IsName("SickWait"))
+        {
+            sickImage.sprite = character;
+            sickAni.SetTrigger("Start");
+        }
     }
 }

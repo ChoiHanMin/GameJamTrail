@@ -22,7 +22,7 @@ public class CTrain : MonoBehaviour
 
     private bool firstTrain = false;
 
-
+    [SerializeField] private CCharacter evadeCharacter;
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
@@ -98,6 +98,7 @@ public class CTrain : MonoBehaviour
     public void Damage(bool damage)
     {
         isDamage = damage;
+        evadeCharacter = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -107,7 +108,33 @@ public class CTrain : MonoBehaviour
         {
             CGameManager.Instance.TrainDamage();
         }
+        if (other.tag == "Character" && firstTrain)
+        {
+            CGameManager.Instance.TrainDamage();
+            CCharacter character = other.GetComponent<CCharacter>();
+            character.SickStart();
+        }
+        if (other.tag == "Evade" && firstTrain)
+        {
+            evadeCharacter = other.GetComponentInParent<CCharacter>();
+        }
 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "Evade" && firstTrain && evadeCharacter != null)
+        {
+            evadeCharacter = null;
+        }
+    }
+
+    public void DangerShout()
+    {
+        if(evadeCharacter != null && !isDamage)
+        {
+            evadeCharacter.Evade();
+            evadeCharacter = null;
+        }
     }
 
 }
