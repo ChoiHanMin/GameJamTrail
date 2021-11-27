@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class LoginScript : MonoBehaviour
 {
     public InputField Nickname;
-    public CGameManager_HM GM;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +22,12 @@ public class LoginScript : MonoBehaviour
 
     public void NicknameSave()
     {
-        if("".Equals(Nickname.text))
+        if ("".Equals(Nickname.text) == false)
         {
-            GM.UserName = Nickname.text;
+           // GM.UserName = Nickname.text;
+            Debug.Log(Nickname.text);
+            Application.LoadLevel("InGame");
         }
-        Debug.Log(Nickname.text);
+        
     }
 }
