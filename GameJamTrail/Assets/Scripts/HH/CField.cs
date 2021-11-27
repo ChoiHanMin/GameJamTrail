@@ -8,24 +8,18 @@ public class CField : MonoBehaviour, IMove
     private IFieldControl fieldControl;
     [SerializeField] private TMP_Text mText;
     [SerializeField] private GameObject riverOb;
-    [SerializeField] private GameObject finishOb;
-    [SerializeField] private GameObject signOb;
-    [SerializeField] private GameObject textOb;
 
-    public void SetField(IFieldControl fieldControl, int m, bool riverOn, bool finish)
+    public void SetField(IFieldControl fieldControl, int m, bool riverOn)
     {
         this.fieldControl = fieldControl;
-        signOb.SetActive(m % 100 == 0);
-        textOb.SetActive(m % 100 == 0);
         mText.text = m +"M";
         CGameManager.Instance.AddMove(this);
         riverOb.SetActive(riverOn);
-        finishOb.SetActive(finish);
     }
 
-    public void SetField(IFieldControl fieldControl, int m, float startZPos, bool riverOn, bool finish)
+    public void SetField(IFieldControl fieldControl, int m, float startZPos, bool riverOn)
     {
-        SetField(fieldControl, m, riverOn, finish);
+        SetField(fieldControl, m, riverOn);
         transform.position = new Vector3(transform.position.x, transform.position.y, startZPos);
     }
 

@@ -20,7 +20,7 @@ public class CTrain : MonoBehaviour
 
     private bool waitHuddleDamage = true;
 
-    [SerializeField] private bool firstTrain = false;
+    private bool firstTrain = false;
 
     [SerializeField] private CCharacter evadeCharacter;
     private void Awake()
@@ -34,11 +34,6 @@ public class CTrain : MonoBehaviour
         this.num = num;
         firstTrain = num == 0;
         transform.position = new Vector3(transform.position.x, transform.position.y, zPos + moveZPos);
-    }
-
-    public void FinishToMove(float movePos)
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + movePos);
     }
 
     public void Jump()
@@ -123,19 +118,15 @@ public class CTrain : MonoBehaviour
         {
             evadeCharacter = other.GetComponentInParent<CCharacter>();
         }
-        if (other.tag == "Finish" && firstTrain)
-        {
-            CGameManager.Instance.Finish();
-        }
 
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.tag != "Evade" && firstTrain && evadeCharacter != null)
-    //    {
-    //        evadeCharacter = null;
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag != "Evade" && firstTrain && evadeCharacter != null)
+        {
+            evadeCharacter = null;
+        }
+    }
 
     public void DangerShout()
     {
