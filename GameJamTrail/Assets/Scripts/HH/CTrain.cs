@@ -23,6 +23,10 @@ public class CTrain : MonoBehaviour
     [SerializeField] private bool firstTrain = false;
 
     [SerializeField] private CCharacter evadeCharacter;
+
+    [SerializeField] private Animation smoke;
+    [SerializeField] private Animation chain;
+    [SerializeField] private Animation ppuppu;
     private void Awake()
     {
         trainJumpAni = GetComponent<Animator>();
@@ -63,6 +67,15 @@ public class CTrain : MonoBehaviour
     {
         action = true;
         ani1 = 0f;
+
+        if (smoke != null)
+        {
+            smoke.Play();
+        }
+        if (chain != null)
+        {
+            chain.Play();
+        }
     }
     public void SpeedChange(float speed)
     {
@@ -83,6 +96,11 @@ public class CTrain : MonoBehaviour
     public void NextJump()
     {
         CGameManager.Instance.NextJump(num);
+    }
+
+    public void ChainSpeed(float speed)
+    {
+
     }
 
     // Update is called once per frame
@@ -139,9 +157,13 @@ public class CTrain : MonoBehaviour
 
     public void DangerShout()
     {
-        if(evadeCharacter != null && !isDamage)
+        if(evadeCharacter != null)// && !isDamage)
         {
             evadeCharacter.Evade();
+            if (ppuppu != null)
+            {
+                ppuppu.Play();
+            }
             evadeCharacter = null;
         }
     }
