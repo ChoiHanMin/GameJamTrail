@@ -17,7 +17,7 @@ public interface IMove
 
 public class CGameManager : MonoBehaviour
 {
-    
+
 
     private static CGameManager instance;
     public static CGameManager Instance { get { return instance; } }
@@ -63,6 +63,9 @@ public class CGameManager : MonoBehaviour
     public float sensitivity = 100;
     public float loudness = 0;
 
+    [Header("----------------인게임 시간 필요 변수")]
+    public Text TimeMinute;
+    public int minute;
 
     public float GetGameTime()
     {
@@ -93,7 +96,6 @@ public class CGameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = Microphone.Start(null, false, 999, 44100);
@@ -116,6 +118,12 @@ public class CGameManager : MonoBehaviour
         {
             GameTimer += Time.deltaTime;
             TimerText.text = string.Format("{0:N2}", GameTimer);
+            if (GameTimer >= 60)
+            {
+                GameTimer = 0;
+                minute++;
+                TimeMinute.text = minute.ToString();
+            }
         }
 
         if (isMove && firstTrainMoveEnd && !finish)
@@ -135,7 +143,7 @@ public class CGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
         {
             firstTrainMove = true;
-            
+
         }
 
         if (firstTrainMove && !firstTrainMoveEnd && !isDamage)
@@ -300,7 +308,7 @@ public class CGameManager : MonoBehaviour
         else
         {
             speedX = kms * 10f;
-        } 
+        }
         speedText.text = speedX.ToString("#0") + "Km";
         trains[2].SpeedChange(kms);
     }
