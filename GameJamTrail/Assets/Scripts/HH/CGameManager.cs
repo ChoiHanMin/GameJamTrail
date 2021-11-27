@@ -143,7 +143,7 @@ public class CGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
         {
             firstTrainMove = true;
-
+            CSoundManager.Instance.InGameBgmPlay();
         }
 
         if (firstTrainMove && !firstTrainMoveEnd && !isDamage)
@@ -202,6 +202,7 @@ public class CGameManager : MonoBehaviour
             if (!jumping)
             {
                 trains[0].Jump();
+                CSoundManager.Instance.PlaySFX(SoundSFX.Jump);
             }
 
             //jump = true;
@@ -353,6 +354,7 @@ public class CGameManager : MonoBehaviour
         isMove = !isMove;
         finish = true;
         bIsGameStart = false;
+        CSoundManager.Instance.GameEndBgmPlay();
     }
 
     public float GetAveragedVolume()

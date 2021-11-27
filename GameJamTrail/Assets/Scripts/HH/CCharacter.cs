@@ -12,10 +12,12 @@ public class CCharacter : MonoBehaviour
         objectMove.Remove();
         CGameManager.Instance.SickAniStart(sickSprite);
         CObjectPool.instance.PoolObject(gameObject);
+        CSoundManager.Instance.PlaySFX(Random.Range(0, 2) == 0 ? SoundSFX.Hit1 : SoundSFX.Hit2);
     }
 
     public void Evade()
     {
         evadeAni.SetTrigger("Evade");
+        CSoundManager.Instance.PlaySFX(SoundSFX.Miss);
     }
 }

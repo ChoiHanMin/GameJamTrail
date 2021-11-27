@@ -129,6 +129,7 @@ public class CTrain : MonoBehaviour
         if (isDamage) return;
         if (other.tag == "Huddle" && waitHuddleDamage && firstTrain)
         {
+            CSoundManager.Instance.PlaySFX(SoundSFX.Huddle_Crush);
             CGameManager.Instance.TrainDamage();
         }
         if (other.tag == "Character" && firstTrain)
