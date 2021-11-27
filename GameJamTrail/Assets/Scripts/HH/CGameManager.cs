@@ -24,9 +24,6 @@ public class CGameManager : MonoBehaviour
     private float spped = 1f;
 
 
-    // MH_ADD
-    private float GameTimer;
-    public Text TimeText;
 
     public void AddMove(IMove move)
     {
@@ -57,14 +54,33 @@ public class CGameManager : MonoBehaviour
         {
             for (int i = 0; i < moveList.Count; i++)
             {
-                moveList[i].Move(0);
+                moveList[i].Move(Time.deltaTime * spped * kms);
             }
         }
-        if (GameTimer < 30)
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameTimer += Time.deltaTime;
-            TimeText.text = string.Format("{0:N2}", GameTimer);
+            isMove = !isMove;
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (level < kmsLevel.Length - 1)
+            {
+                level++;
+                kms = kmsLevel[level];
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (level > 0)
+            {
+                level--;
+                kms = kmsLevel[level];
+            }
+        }
+
     }
 
 
