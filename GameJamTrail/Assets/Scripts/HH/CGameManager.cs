@@ -17,7 +17,15 @@ public class CGameManager : MonoBehaviour
     private List<IMove> moveList = new List<IMove>();
 
     private bool isMove = false;
-    private float spped = 1f;
+    // 1√ ø° 1.7m 
+    private float speed = 0.17f;
+    [Range(1f, 120f)]
+    [SerializeField] private float kms = 1;
+
+    private float[] kmsLevel = { 1f, 20f, 40f, 60f, 80f, 120f };
+    private int level = 0;
+        
+
     public void AddMove(IMove move)
     {
         moveList.Add(move);
@@ -47,7 +55,29 @@ public class CGameManager : MonoBehaviour
         {
             for (int i = 0; i < moveList.Count; i++)
             {
-                moveList[i].Move(0);
+                moveList[i].Move(Time.deltaTime * speed * kms);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isMove = !isMove;
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (level < kmsLevel.Length - 1)
+            {
+                level++;
+                kms = kmsLevel[level];
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (level > 0)
+            {
+                level--;
+                kms = kmsLevel[level];
             }
         }
     }
