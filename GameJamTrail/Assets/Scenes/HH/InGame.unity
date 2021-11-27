@@ -7479,6 +7479,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760882347}
   m_Mesh: {fileID: 4719284060014443200, guid: b50c23c15a6fe4b49b6370912252a10b, type: 3}
+--- !u!114 &1779190568 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1779190568, guid: e618ed963be6f004fbd7e3db49a759b3, type: 3}
+  m_PrefabInstance: {fileID: 1855151478}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1851386181
 GameObject:
   m_ObjectHideFlags: 0
@@ -8939,6 +8950,10 @@ PrefabInstance:
       propertyPath: speedText
       value: 
       objectReference: {fileID: 1568979826}
+    - target: {fileID: 8977752179428480262, guid: d57d6dc040041a24c8696dd217500754, type: 3}
+      propertyPath: TimeMinute
+      value: 
+      objectReference: {fileID: 1779190568}
     - target: {fileID: 8977752179428480262, guid: d57d6dc040041a24c8696dd217500754, type: 3}
       propertyPath: graduation
       value: 
