@@ -15,7 +15,7 @@ Library/
 Logs/
 UserSettings/
 Temp/
-
+obj/
 
 # ignore doc/notes.txt, but not doc/server/arch.txt
 
