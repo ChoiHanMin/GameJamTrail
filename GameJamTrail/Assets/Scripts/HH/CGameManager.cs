@@ -18,11 +18,11 @@ public class CGameManager : MonoBehaviour
 
     private bool isMove = false;
     // 1√ ø° 1.7m 
-    private float speed = 0.17f;
+    private float speed = 1f;
     [Range(1f, 120f)]
-    [SerializeField] private float kms = 1;
+    [SerializeField] private float kms = 10;
 
-    private float[] kmsLevel = { 1f, 20f, 40f, 60f, 80f, 120f };
+    private float[] kmsLevel = { 1f, 5f, 10f, 15f };
     private int level = 0;
         
 
