@@ -14,13 +14,18 @@ public class EndScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MessageDispatcher.AddListener("ShowRank", ShowRank);
+        MessageDispatcher.AddListener("ShowRank_End", ShowRank);
     }
 
     // Update is called once per frame
     void Update()
     {
-        MessageDispatcher.RemoveListener("ShowRank", ShowRank);
+       
+    }
+
+    private void OnDestroy()
+    {
+        MessageDispatcher.RemoveListener("ShowRank_End", ShowRank);
     }
 
     public void SetRestart()
@@ -35,6 +40,7 @@ public class EndScript : MonoBehaviour
 
     private void ShowRank(IMessage rMessage)
     {
+        Debug.Log("RankShow");
         Rank.SetActive(true);
 
         if (UserNames != null)
