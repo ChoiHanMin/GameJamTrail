@@ -31,7 +31,7 @@ public class CGameManager : MonoBehaviour
     public static CGameManager Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
-    private bool isMove = false;
+    [SerializeField] private bool isMove = false;
     // 1√ ø° 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
@@ -52,9 +52,10 @@ public class CGameManager : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip audioClip;
 
-    private bool firstTrainMove = false;
-    private bool firstTrainMoveEnd = false;
-    private float zPos = 0f;
+    [SerializeField] private bool firstTrainMove = false;
+    [SerializeField] private bool firstTrainMoveEnd = false;
+    [SerializeField] private float zPos = 0f;
+    private float firstSpeed = 0f;
 
     //HM_ADD
     [Header("HM_ADD=====================")]
@@ -112,7 +113,7 @@ public class CGameManager : MonoBehaviour
             TimerText.text = string.Format("{0:N2}", GameTimer);
         }
 
-        if (isMove)
+        if (isMove && firstTrainMoveEnd)
         {
             for (int i = 0; i < moveList.Count; i++)
             {
@@ -120,9 +121,23 @@ public class CGameManager : MonoBehaviour
             }
         }
 
-        if (firstTrainMove && !firstTrainMoveEnd && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
         {
-            zPos += 10f * Time.deltaTime;
+            firstTrainMove = true;
+        }
+
+        if (firstTrainMove && !firstTrainMoveEnd)
+        {
+            zPos += firstSpeed * Time.deltaTime;
+            Debug.Log(" firstSpeed : " + firstSpeed);
+            if (firstSpeed < 10f)
+            {
+                firstSpeed += 0.07f;
+            }
+            else
+            {
+                firstSpeed = 10f;
+            }
             if (zPos >= 3f)
             {
                 zPos = 3f;
@@ -131,17 +146,10 @@ public class CGameManager : MonoBehaviour
             }
             for (int i = 0; i < trains.Length; i++)
             {
-                trains[i].FirstMove(zPos);
+                trains[i].FirstMove(zPos, i);
             }
 
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isMove = !isMove;
-        }
-
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (level < kmsLevel.Length - 1)
@@ -162,6 +170,16 @@ public class CGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F12))// && !jump)
         {
+            bool jumping = false;
+            for (int i = 0; i < trains.Length; i++)
+            {
+                jumping = trains[i].IsJump();
+            }
+            if (!jumping)
+            {
+                trains[0].Jump();
+            }
+
             //jump = true;
             //train.Jump();
         }
@@ -203,6 +221,15 @@ public class CGameManager : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    public void NextJump(int num)
+    {
+        if (num + 1 < trains.Length)
+        {
+            trains[num + 1].Jump();
+        }
+    }
+
 
 
     //HM_ADD
