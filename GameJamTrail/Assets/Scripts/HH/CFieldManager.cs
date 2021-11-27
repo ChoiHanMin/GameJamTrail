@@ -24,7 +24,7 @@ public class CFieldManager : MonoBehaviour, IFieldControl
     {
         fieldList.Remove(field);
         field.SetField(this, m, fieldList[fieldList.Count - 1].NowZPos() + 10f);
-        m += 5;
+        m += 10;
 
         fieldList.Add(field);
     }
@@ -32,13 +32,13 @@ public class CFieldManager : MonoBehaviour, IFieldControl
     private void Awake()
     {
         firstField[0].SetField(this, m);
-        m += 5;
+        m += 10;
         fieldList.Add(firstField[0]);
         firstField[1].SetField(this, m);
-        m += 5;
+        m += 10;
         fieldList.Add(firstField[1]);
         firstField[2].SetField(this, m);
-        m += 5;
+        m += 10;
 
         fieldList.Add(firstField[2]);
     }

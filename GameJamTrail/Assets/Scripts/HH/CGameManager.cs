@@ -11,19 +11,26 @@ public class CGameManager : MonoBehaviour
     public static CGameManager Instance { get { return instance; } }
 
     private List<IMove> moveList = new List<IMove>();
-
     private bool isMove = false;
     // 1√ ø° 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
     [SerializeField] private float kms = 10;
+    [SerializeField] private CTrain train;
+    [SerializeField] private RectTransform graduation;
 
     private float[] kmsLevel = { 1f, 5f, 10f, 15f };
     private int level = 0;
 
     private float spped = 1f;
 
+    private bool jump = false;
 
+    private float graduationLeftMax = -142f;
+    private float graduationRightMax = 142f;
+
+    private AudioSource audioSource;
+    private AudioClip audioClip;
 
     public void AddMove(IMove move)
     {
@@ -38,12 +45,17 @@ public class CGameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(gameObject);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        
+        
         //Timer = StartCoroutine("TimerSet");
     }
 
@@ -81,6 +93,48 @@ public class CGameManager : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.F12))// && !jump)
+        {
+            //jump = true;
+            train.Jump();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (graduation.localPosition.x - 10f < graduationLeftMax)
+            {
+                graduation.localPosition = new Vector3(graduationLeftMax, graduation.localPosition.y);
+            }
+            else
+            {
+                graduation.localPosition = new Vector3(graduation.localPosition.x - 10f, graduation.localPosition.y);
+            }
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (graduation.localPosition.x + 10f > graduationRightMax)
+            {
+                graduation.localPosition = new Vector3(graduationRightMax, graduation.localPosition.y);
+            }
+            else
+            {
+                graduation.localPosition = new Vector3(graduation.localPosition.x + 10f, graduation.localPosition.y);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            audioClip = Microphone.Start(null, false, 5, 44100);
+            while (!(Microphone.GetPosition(null) > 0)) ;
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            audioSource.clip = audioClip;
+            audioSource.Play();
+        }
     }
 
 
