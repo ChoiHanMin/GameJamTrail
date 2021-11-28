@@ -10,31 +10,33 @@ public class GameStartTimer : MonoBehaviour
     public Image GameStartImg;
     public GameObject GameStartText;
     public int Spritenum;
+    private DOTweenAnimation MyAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
         Spritenum = 0;
-        GameStartTimerImageChange();
+        MyAnimation = this.GetComponent<DOTweenAnimation>();
     }
 
 
-    private void GameStartTimerImageChange()
+    public void GameStartTimerImageChange()
     {
-        GameStartImg.transform.DOScale(2.2f, 0.5f).OnComplete(() =>
-        {
-            if (Spritenum < GameStartSprite.Length - 1)
-            {
-                GameStartImg.sprite = GameStartSprite[Spritenum];
-                Spritenum++;
-                GameStartTimerImageChange();
-            }
-            else
-            {
-                GameStartText.SetActive(true);
-                this.gameObject.SetActive(false);
-            }
 
-        }).SetDelay(0.5f).SetEase(Ease.InOutQuart);
+        if (Spritenum < GameStartSprite.Length)
+        {
+            Debug.Log("Image Change"); 
+          
+            GameStartImg.sprite = GameStartSprite[Spritenum];
+            Spritenum++;
+            MyAnimation.DORewind();
+            MyAnimation.DOPlayForward();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+            GameStartText.SetActive(true);
+        }
+
     }
 }

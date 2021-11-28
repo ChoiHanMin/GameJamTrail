@@ -68,9 +68,12 @@ public class JsonManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            MessageDispatcher.SendMessage("ShowRank");
+            Application.Quit();
+#if !UNITY_EDITOR
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+#endif
         }
     }
 
@@ -80,7 +83,7 @@ public class JsonManager : MonoBehaviour
         CreateJsonFile(Application.dataPath, "JTestClass", SaveString);
     }
 
-    void SortUserList()
+    public void SortUserList()
     {
         UserList.Add(new UserInfoClass(UserName, CGameManager.Instance.GetGameTime()));
         UserList = UserList.OrderBy(x => x.ClearTime).ToList();

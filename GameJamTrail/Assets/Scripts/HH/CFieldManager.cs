@@ -94,7 +94,7 @@ public class CFieldManager : MonoBehaviour, IFieldControl
         fieldList.Add(field);
     }
 
-    private void Awake()
+    private void Start()
     {
         //Debug.Log(riverNum == 4);
         firstField[0].SetField(this, m, riverNum == 4, false);

@@ -8,6 +8,7 @@ using DG.Tweening;
 using System.IO;
 using System.Text;
 using System.Linq;
+using com.ootii.Messages;
 
 public interface IMove
 {
@@ -354,6 +355,11 @@ public class CGameManager : MonoBehaviour
         isMove = !isMove;
         finish = true;
         bIsGameStart = false;
+
+
+        JsonManager.Instance.SortUserList();
+        MessageDispatcher.SendMessage("ShowRank_End");
+
         CSoundManager.Instance.GameEndBgmPlay();
     }
 
@@ -367,5 +373,10 @@ public class CGameManager : MonoBehaviour
             a += Mathf.Abs(s);
         }
         return a / 256;
+    }
+
+    public void setPlay()
+    {
+        firstTrainMove = true;
     }
 }
