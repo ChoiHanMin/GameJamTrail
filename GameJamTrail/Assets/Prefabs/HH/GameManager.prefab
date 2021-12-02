@@ -45,15 +45,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09481fe074ea438458db8e6b3c315c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kms: 1
+  isMove: 0
+  kms: 10
   trains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   graduation: {fileID: 0}
-  UserList: []
+  firstTrainMove: 0
+  firstTrainMoveEnd: 0
+  zPos: 0
+  speedText: {fileID: 0}
   TimerText: {fileID: 0}
-  UserName: 
+  sensitivity: 100
+  loudness: 0
+  TimeMinute: {fileID: 0}
+  minute: 0
+  HP_Img:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Broken_HP: {fileID: 21300000, guid: ae882707a100040459fdfdc28b132758, type: 3}
+  FieldMng: {fileID: 0}
+  sickAni: {fileID: 0}
+  sickImage: {fileID: 0}
 --- !u!82 &8977752179428480260
 AudioSource:
   m_ObjectHideFlags: 0

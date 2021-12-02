@@ -86,7 +86,7 @@ public class TrainSpeedAnchor : MonoBehaviour
             //MyRotate = this.gameObject.transform.rotation;
             MyRotate = rt.transform.rotation;
             //MyRotate = rt.transform.rotation;
-            Debug.Log("MyRotate : " + Degree);
+            //Debug.Log("MyRotate : " + Degree);
         }
     }
 

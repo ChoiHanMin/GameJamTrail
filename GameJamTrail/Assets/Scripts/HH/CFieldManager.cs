@@ -29,7 +29,7 @@ public class CFieldManager : MonoBehaviour, IFieldControl
 
     private void Update()
     {
-        Debug.Log(firstImpedimentM + " " + CGameManager.Instance.MoveM());
+        //Debug.Log(firstImpedimentM + " " + CGameManager.Instance.MoveM());
             
         if (firstImpedimentM < CGameManager.Instance.MoveM())
         {
@@ -112,5 +112,9 @@ public class CFieldManager : MonoBehaviour, IFieldControl
         fieldList.Add(firstField[2]);
     }
 
+    public int GetMeter()
+    {
+        return m;
+    }
     
 }

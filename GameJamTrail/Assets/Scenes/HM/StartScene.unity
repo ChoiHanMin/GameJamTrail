@@ -438,9 +438,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 249220532, guid: f9e530099d298a145b449d0cfc698857, type: 3}
+      propertyPath: delay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 249220532, guid: f9e530099d298a145b449d0cfc698857, type: 3}
+      propertyPath: duration
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 663860452, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 663860453, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -469,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 663860453, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726928531, guid: f9e530099d298a145b449d0cfc698857, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1949036555, guid: f9e530099d298a145b449d0cfc698857, type: 3}
       propertyPath: Jsonmng
