@@ -126,7 +126,13 @@ public class CTrain : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Finish" && firstTrain)
+        {
+            CGameManager.Instance.Finish();
+        }
+
         if (isDamage) return;
+
         if (other.tag == "Huddle" && waitHuddleDamage && firstTrain)
         {
             CSoundManager.Instance.PlaySFX(SoundSFX.Huddle_Crush);
@@ -142,10 +148,7 @@ public class CTrain : MonoBehaviour
         {
             evadeCharacter = other.GetComponentInParent<CCharacter>();
         }
-        if (other.tag == "Finish" && firstTrain)
-        {
-            CGameManager.Instance.Finish();
-        }
+        
 
     }
     //private void OnTriggerExit(Collider other)

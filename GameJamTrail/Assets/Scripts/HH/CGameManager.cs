@@ -30,7 +30,7 @@ public class CGameManager : MonoBehaviour
     // 1√ ø° 1.7m 
     private float speed = 1f;
     [Range(1f, 120f)]
-    [SerializeField] private float kms = 0f;
+    [SerializeField] public float kms = 0f;
     [SerializeField] private CTrain[] trains;
     [SerializeField] private RectTransform graduation;
 
@@ -173,27 +173,27 @@ public class CGameManager : MonoBehaviour
             trains[2].AniStart();
             KmToString();
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow) && firstTrainMove && firstTrainMoveEnd)
-        {
-            if (level < kmsLevel.Length - 1)
-            {
-                level++;
-            }
-            kms = kmsLevel[level];
-            KmToString();
-        }
+        //if (Input.GetKeyDown(KeyCode.UpArrow) && firstTrainMove && firstTrainMoveEnd)
+        //{
+        //    if (level < kmsLevel.Length - 1)
+        //    {
+        //        level++;
+        //    }
+        //    kms = kmsLevel[level];
+        //    KmToString();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) && firstTrainMove && firstTrainMoveEnd)
-        {
-            if (level > 0)
-            {
-                level--;
-            }
-            kms = kmsLevel[level];
-            KmToString();
-        }
+        //if (Input.GetKeyDown(KeyCode.DownArrow) && firstTrainMove && firstTrainMoveEnd)
+        //{
+        //    if (level > 0)
+        //    {
+        //        level--;
+        //    }
+        //    kms = kmsLevel[level];
+        //    KmToString();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.F12) && !isDamage)// && !jump)
+        if (Input.GetKeyDown(KeyCode.X))// && !jump)
         {
             bool jumping = false;
             for (int i = 0; i < trains.Length; i++)
@@ -300,7 +300,7 @@ public class CGameManager : MonoBehaviour
 
     }
 
-    private void KmToString()
+    public void KmToString()
     {
         float speedX;
         if (kms > 10)
