@@ -23,12 +23,15 @@ public class LoginScript : MonoBehaviour
 
     public void NicknameSave()
     {
-        if ("".Equals(Nickname.text) == false)
-        {
-            Jsonmng.UserName = Nickname.text;
-            Debug.Log(Nickname.text);
-            Application.LoadLevel("InGame");
-        }
-        
+
+        //if ("".Equals(Nickname.text) == false)
+        //{
+        //    Jsonmng.UserName = Nickname.text;
+        //    Debug.Log(Nickname.text);
+        //    Application.LoadLevel("InGame");
+        //}
+
+        Application.LoadLevel("InGame");
+
     }
 }

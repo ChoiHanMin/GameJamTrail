@@ -68,6 +68,15 @@ public class CGameManager : MonoBehaviour
     public Text TimeMinute;
     public int minute;
 
+    [Header("----------------HP º¯¼ö")]
+    private int HP;
+    [SerializeField]
+    private Image[] HP_Img;
+    [SerializeField]
+    private Sprite Broken_HP;
+
+    public CFieldManager FieldMng;
+
     public float GetGameTime()
     {
         return GameTimer;
@@ -98,9 +107,9 @@ public class CGameManager : MonoBehaviour
     {
         instance = this;
         audioSource = GetComponent<AudioSource>();
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = Microphone.Start(null, false, 999, 44100);
-        while (!(Microphone.GetPosition(null) > 0)) ;
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = Microphone.Start(null, false, 999, 44100);
+        //while (!(Microphone.GetPosition(null) > 0)) ;
         audioSource.Play();
     }
 
@@ -109,6 +118,11 @@ public class CGameManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        if (FieldMng == null)
+        {
+            FieldMng = GameObject.FindGameObjectWithTag("FieldMng").GetComponent<CFieldManager>();
+        }
+        HP = 3;
     }
 
     // Update is called once per frame
@@ -193,59 +207,48 @@ public class CGameManager : MonoBehaviour
         //    KmToString();
         //}
 
-        if (Input.GetKeyDown(KeyCode.X))// && !jump)
+        if (Input.GetKeyDown(KeyCode.X) && !isDamage)// && !jump)
         {
-            bool jumping = false;
-            for (int i = 0; i < trains.Length; i++)
-            {
-                jumping = trains[i].IsJump();
-            }
-            if (!jumping)
-            {
-                trains[0].Jump();
-                CSoundManager.Instance.PlaySFX(SoundSFX.Jump);
-            }
 
-            //jump = true;
-            //train.Jump();
+            JumpPlay();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (graduation.localPosition.x - 10f < graduationLeftMax)
-            {
-                graduation.localPosition = new Vector3(graduationLeftMax, graduation.localPosition.y);
-            }
-            else
-            {
-                graduation.localPosition = new Vector3(graduation.localPosition.x - 10f, graduation.localPosition.y);
-            }
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    if (graduation.localPosition.x - 10f < graduationLeftMax)
+        //    {
+        //        graduation.localPosition = new Vector3(graduationLeftMax, graduation.localPosition.y);
+        //    }
+        //    else
+        //    {
+        //        graduation.localPosition = new Vector3(graduation.localPosition.x - 10f, graduation.localPosition.y);
+        //    }
 
-        }
+        //}
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (graduation.localPosition.x + 10f > graduationRightMax)
-            {
-                graduation.localPosition = new Vector3(graduationRightMax, graduation.localPosition.y);
-            }
-            else
-            {
-                graduation.localPosition = new Vector3(graduation.localPosition.x + 10f, graduation.localPosition.y);
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    if (graduation.localPosition.x + 10f > graduationRightMax)
+        //    {
+        //        graduation.localPosition = new Vector3(graduationRightMax, graduation.localPosition.y);
+        //    }
+        //    else
+        //    {
+        //        graduation.localPosition = new Vector3(graduation.localPosition.x + 10f, graduation.localPosition.y);
+        //    }
+        //}
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            audioClip = Microphone.Start(null, false, 5, 44100);
-            while (!(Microphone.GetPosition(null) > 0)) ;
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    audioClip = Microphone.Start(null, false, 5, 44100);
+        //    while (!(Microphone.GetPosition(null) > 0)) ;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            audioSource.clip = audioClip;
-            audioSource.Play();
-        }
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    audioSource.clip = audioClip;
+        //    audioSource.Play();
+        //}
 
         if (isDamage && !finish)
         {
@@ -272,14 +275,15 @@ public class CGameManager : MonoBehaviour
             KmToString();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TrainDamage();
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    TrainDamage();
+        //}
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            trains[0].DangerShout();
+            ChoCho();
+            // trains[0].DangerShout();
         }
 
         if (finish)
@@ -336,6 +340,8 @@ public class CGameManager : MonoBehaviour
             kms = 1f;
             firstTrainMoveEnd = false;
         }
+
+        HPMinus();
     }
 
     [SerializeField] private Animator sickAni;
@@ -357,7 +363,7 @@ public class CGameManager : MonoBehaviour
         bIsGameStart = false;
 
 
-        JsonManager.Instance.SortUserList();
+        //JsonManager.Instance.SortUserList();
         MessageDispatcher.SendMessage("ShowRank_End");
 
         CSoundManager.Instance.GameEndBgmPlay();
@@ -378,5 +384,42 @@ public class CGameManager : MonoBehaviour
     public void setPlay()
     {
         firstTrainMove = true;
+    }
+
+    public void JumpPlay()
+    {
+        bool jumping = false;
+        for (int i = 0; i < trains.Length; i++)
+        {
+            jumping = trains[i].IsJump();
+        }
+        if (!jumping)
+        {
+            trains[0].Jump();
+            CSoundManager.Instance.PlaySFX(SoundSFX.Jump);
+        }
+    }
+
+    public void ChoCho()
+    {
+        trains[0].DangerShout();
+    }
+
+    public void HPMinus()
+    {
+        HP--;
+        if (HP < 0)
+        {
+            Finish();
+        }
+        else
+        {
+            HP_Img[HP].sprite = Broken_HP;
+        }
+    }
+
+    public float GetTimer()
+    {
+        return GameTimer;
     }
 }

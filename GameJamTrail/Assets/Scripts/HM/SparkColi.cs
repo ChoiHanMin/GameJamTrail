@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using com.ootii.Messages;
 
-public class SparkColi : MonoBehaviour, IPointerEnterHandler
+public class SparkColi : MonoBehaviour/*, IPointerEnterHandler*/
 {
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log("bbbbbbbbbbbb");
-        MessageDispatcher.SendMessage("ImageIn");
-    }
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    Debug.Log("bbbbbbbbbbbb");
+        
+    //    //MessageDispatcher.SendMessage("ImageIn");
+    //}
 
 }

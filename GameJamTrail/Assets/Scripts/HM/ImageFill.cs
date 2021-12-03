@@ -57,7 +57,8 @@ public class ImageFill : MonoBehaviour
         else if (FillImage.fillAmount > 0.4 && FillImage.fillAmount < 0.9)
         {
             FillImage.sprite = FillSprites[0];
-            CGameManager.Instance.kms = 10;
+            CGameManager.Instance.kms = 15.0f;
+            CGameManager.Instance.KmToString();
         }
         else if (FillImage.fillAmount <= 0.4)
         {
