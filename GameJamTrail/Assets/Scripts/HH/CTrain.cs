@@ -126,12 +126,10 @@ public class CTrain : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Finish" && firstTrain)
-        {
-            CGameManager.Instance.Finish();
-        }
-
-        if (isDamage) return;
+        //if (other.tag == "Finish" && firstTrain)
+        //{
+        //    CGameManager.Instance.Finish();
+        //}
 
         if (other.tag == "Huddle" && waitHuddleDamage && firstTrain)
         {

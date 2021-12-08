@@ -28,6 +28,7 @@ public class GameStartTimer : MonoBehaviour
             Debug.Log("Image Change"); 
           
             GameStartImg.sprite = GameStartSprite[Spritenum];
+            GameStartImg.SetNativeSize();
             Spritenum++;
             MyAnimation.DORewind();
             MyAnimation.DOPlayForward();

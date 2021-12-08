@@ -19,5 +19,6 @@ public class CCharacter : MonoBehaviour
     {
         evadeAni.SetTrigger("Evade");
         CSoundManager.Instance.PlaySFX(SoundSFX.Miss);
+        CGameManager.Instance.SuccessEffect(transform.position);
     }
 }

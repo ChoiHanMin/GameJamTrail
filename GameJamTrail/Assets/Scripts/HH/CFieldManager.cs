@@ -21,9 +21,9 @@ public class CFieldManager : MonoBehaviour, IFieldControl
 
     private float firstImpedimentM = 30f;
 
-    private float[] firstImpedimentRan = {5f, 5f, 2.5f};
+    //private float[] firstImpedimentRan = {5f, 5f, 2.5f};
 
-    private float[] firstImpedimentPos = {30f, 20f, 12.5f};
+    private float[] firstImpedimentPos = {30f, 25f, 20f, 15f, 10f};
 
     private bool gameend = false;
 
@@ -41,20 +41,21 @@ public class CFieldManager : MonoBehaviour, IFieldControl
 
             if (CGameManager.Instance.MoveM() < 300f && !gameend)
             {
-                firstImpedimentM += Random.Range(firstImpedimentPos[0] - firstImpedimentRan[0], firstImpedimentPos[0] + firstImpedimentRan[0]);
+                firstImpedimentM += firstImpedimentPos[0]; //Random.Range(firstImpedimentPos[0] - firstImpedimentRan[0], firstImpedimentPos[0] + firstImpedimentRan[0]);
             }
             else if (CGameManager.Instance.MoveM() < 600f && !gameend)
             {
-                firstImpedimentM += Random.Range(firstImpedimentPos[1] - firstImpedimentRan[1], firstImpedimentPos[1] + firstImpedimentRan[1]);
+                firstImpedimentM += firstImpedimentPos[1]; //Random.Range(firstImpedimentPos[1] - firstImpedimentRan[1], firstImpedimentPos[1] + firstImpedimentRan[1]);
             }
             else if (CGameManager.Instance.MoveM() < 960f && !gameend)
             {
-                firstImpedimentM += Random.Range(firstImpedimentPos[2] - firstImpedimentRan[0], firstImpedimentPos[2] + firstImpedimentRan[2]);
+                firstImpedimentM += firstImpedimentPos[2]; //Random.Range(firstImpedimentPos[2] - firstImpedimentRan[0], firstImpedimentPos[2] + firstImpedimentRan[2]);
             }
             else 
             {
-                Debug.Log(firstImpedimentM);
-                firstImpedimentM += 1000f;
+                firstImpedimentM += firstImpedimentPos[3]; //Random.Range(firstImpedimentPos[2] - firstImpedimentRan[0], firstImpedimentPos[2] + firstImpedimentRan[2]);
+                //Debug.Log(firstImpedimentM);
+                //firstImpedimentM += 1000f;
             }
             Debug.Log("»ý¼º !! ");
         }

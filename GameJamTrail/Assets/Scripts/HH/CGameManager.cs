@@ -34,8 +34,12 @@ public class CGameManager : MonoBehaviour
     [SerializeField] private CTrain[] trains;
     [SerializeField] private RectTransform graduation;
 
-    private float[] kmsLevel = { 1f, 5f, 10f, 15f };
-    private int level = 2;
+    private float[] kmsLevel =    {   5f,   6f,   7f,   8f,   9f,   10f,   11f,   12f};
+    private float[] kmsLevelUpM = { 100f, 200f, 300f, 400f, 600f, 800f, 1000f, 1200f};
+
+    private float damageSpeed = 1f;
+
+    private int level = 0;
 
     private float spped = 1f;
 
@@ -44,15 +48,24 @@ public class CGameManager : MonoBehaviour
     private float graduationLeftMax = -142f;
     private float graduationRightMax = 142f;
 
-    private AudioSource audioSource;
+    //private AudioSource audioSource;
     private AudioClip audioClip;
 
     [SerializeField] private bool firstTrainMove = false;
     [SerializeField] private bool firstTrainMoveEnd = false;
     [SerializeField] private float zPos = 0f;
     [SerializeField] private Text speedText;
+    [SerializeField] private CTrainSpeedAnchor trainSpeedAnchor;
+
+
+    [SerializeField] private Transform choChoEffectPos;
+    [SerializeField] private GameObject choChoEffect;
+
+    [SerializeField] private GameObject successEffect;
+
+
     private float firstSpeed = 0f;
-    private bool finish = false;
+    //private bool finish = false;
 
     private float GameTimer;
     private bool bIsGameStart;
@@ -60,6 +73,7 @@ public class CGameManager : MonoBehaviour
     private float moveM = 0f;
 
     public Text TimerText;
+    public TMPro.TMP_Text mText;
 
     public float sensitivity = 100;
     public float loudness = 0;
@@ -106,18 +120,13 @@ public class CGameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        audioSource = GetComponent<AudioSource>();
-        //audioSource = GetComponent<AudioSource>();
-        //audioSource.clip = Microphone.Start(null, false, 999, 44100);
-        //while (!(Microphone.GetPosition(null) > 0)) ;
-        audioSource.Play();
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         if (FieldMng == null)
         {
             FieldMng = GameObject.FindGameObjectWithTag("FieldMng").GetComponent<CFieldManager>();
@@ -129,128 +138,26 @@ public class CGameManager : MonoBehaviour
     private void Update()
     {
         //HM_AdD
-        if (bIsGameStart)
+        //if (bIsGameStart)
+        //{
+        //    GameTimer += Time.deltaTime;
+        //    TimerText.text = string.Format("{0:N2}", GameTimer);
+        //    if (GameTimer >= 60)
+        //    {
+        //        GameTimer = 0;
+        //        minute++;
+        //        TimeMinute.text = minute.ToString();
+        //    }
+        //}
+
+        if (moveM >= kmsLevelUpM[level] && level < kmsLevel.Length - 1)
         {
-            GameTimer += Time.deltaTime;
-            TimerText.text = string.Format("{0:N2}", GameTimer);
-            if (GameTimer >= 60)
-            {
-                GameTimer = 0;
-                minute++;
-                TimeMinute.text = minute.ToString();
-            }
+            level++;
+            Debug.Log("빨라짐 이펙트");
         }
 
-        if (isMove && firstTrainMoveEnd && !finish)
-        {
-            float nextPos = Time.deltaTime * speed * kms;
-            for (int i = 0; i < moveList.Count; i++)
-            {
-                moveList[i].Move(nextPos);
-            }
 
-            //Debug.Log("GGG " + nextPos);
-
-
-            moveM += Time.deltaTime * speed * kms;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
-        {
-            firstTrainMove = true;
-            CSoundManager.Instance.InGameBgmPlay();
-        }
-
-        if (firstTrainMove && !firstTrainMoveEnd && !isDamage)
-        {
-            zPos += kms * Time.deltaTime;
-            if (kms < 10f)
-            {
-                kms += 0.07f;
-            }
-            else
-            {
-                kms = 10f;
-            }
-
-            if (zPos >= 3f)
-            {
-                zPos = 3f;
-                isMove = true;
-                firstTrainMoveEnd = true;
-                bIsGameStart = true;
-            }
-            for (int i = 0; i < trains.Length; i++)
-            {
-                trains[i].FirstMove(zPos, i);
-            }
-            trains[2].AniStart();
-            KmToString();
-        }
-        //if (Input.GetKeyDown(KeyCode.UpArrow) && firstTrainMove && firstTrainMoveEnd)
-        //{
-        //    if (level < kmsLevel.Length - 1)
-        //    {
-        //        level++;
-        //    }
-        //    kms = kmsLevel[level];
-        //    KmToString();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.DownArrow) && firstTrainMove && firstTrainMoveEnd)
-        //{
-        //    if (level > 0)
-        //    {
-        //        level--;
-        //    }
-        //    kms = kmsLevel[level];
-        //    KmToString();
-        //}
-
-        if (Input.GetKeyDown(KeyCode.X) && !isDamage)// && !jump)
-        {
-
-            JumpPlay();
-        }
-
-        //if (Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    if (graduation.localPosition.x - 10f < graduationLeftMax)
-        //    {
-        //        graduation.localPosition = new Vector3(graduationLeftMax, graduation.localPosition.y);
-        //    }
-        //    else
-        //    {
-        //        graduation.localPosition = new Vector3(graduation.localPosition.x - 10f, graduation.localPosition.y);
-        //    }
-
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    if (graduation.localPosition.x + 10f > graduationRightMax)
-        //    {
-        //        graduation.localPosition = new Vector3(graduationRightMax, graduation.localPosition.y);
-        //    }
-        //    else
-        //    {
-        //        graduation.localPosition = new Vector3(graduation.localPosition.x + 10f, graduation.localPosition.y);
-        //    }
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    audioClip = Microphone.Start(null, false, 5, 44100);
-        //    while (!(Microphone.GetPosition(null) > 0)) ;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    audioSource.clip = audioClip;
-        //    audioSource.Play();
-        //}
-
-        if (isDamage && !finish)
+        if (isDamage)
         {
             damageTime += Time.deltaTime;
             if (damageTime > damageEndTime)
@@ -258,65 +165,90 @@ public class CGameManager : MonoBehaviour
                 damageTime = 0f;
                 isDamage = false;
 
-                kms = kmsLevel[level];
-                KmToString();
-
                 for (int i = 0; i < trains.Length; i++)
                 {
                     trains[i].Damage(false);
                 }
             }
-
-            for (int i = 0; i < moveList.Count; i++)
-            {
-                moveList[i].Move(Time.deltaTime * spped * kms);
-            }
-            moveM += Time.deltaTime * speed * kms;
-            KmToString();
         }
 
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    TrainDamage();
-        //}
+
+        if (isMove)
+        {
+            //float targetSpeed = isDamage ? damageSpeed : kmsLevel[level];
+
+            if (kms < kmsLevel[level])
+            {
+                kms += Time.deltaTime;
+            }
+            else
+            {
+                kms = kmsLevel[level];
+            }
+
+            KmToString();
+
+            // 일반적인 이동(맵이 이동)
+            if (firstTrainMoveEnd)
+            {
+                float nextPos = Time.deltaTime * speed * kms;
+                for (int i = 0; i < moveList.Count; i++)
+                {
+                    moveList[i].Move(nextPos);
+                }
+            }
+            // 처음 이동(기차가 이동)
+            else if (firstTrainMove && !firstTrainMoveEnd)
+            {
+                zPos += kms * Time.deltaTime;
+                if (zPos >= 3f)
+                {
+                    zPos = 3f;
+                    isMove = true;
+                    firstTrainMoveEnd = true;
+                    bIsGameStart = true;
+                }
+                for (int i = 0; i < trains.Length; i++)
+                {
+                    trains[i].FirstMove(zPos, i);
+                }
+                trains[2].AniStart();
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && !firstTrainMove && !firstTrainMoveEnd)
+        {
+            firstTrainMove = true;
+            CSoundManager.Instance.InGameBgmPlay();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && !isDamage)// && !jump)
+        {
+
+            JumpPlay();
+        }
+    
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             ChoCho();
-            // trains[0].DangerShout();
         }
 
-        if (finish)
-        {
-            for (int i = 0; i < trains.Length; i++)
-            {
-                trains[i].FinishToMove(kms * Time.deltaTime);
-            }
-        }
 
         loudness = GetAveragedVolume() * sensitivity;
-
-        if (!finish && loudness > 1.5f)
-        {
-            Debug.Log(" loudness " + loudness);
-            trains[0].DangerShout();
-        }
 
     }
 
     public void KmToString()
     {
         float speedX;
-        if (kms > 10)
-        {
-            speedX = 100 + (kms % 10f) * 20f;
-        }
-        else
-        {
-            speedX = kms * 10f;
-        }
+        speedX = kms * 10f;
         speedText.text = speedX.ToString("#0") + "Km";
+        trainSpeedAnchor.SetAng(speedX, 120f);
         trains[2].SpeedChange(kms);
+        moveM += Time.deltaTime * speed * kms;
+        mText.text = moveM.ToString("#,##0") + "M"; // string.Format("{0:N2}", GameTimer);
     }
     public void NextJump(int num)
     {
@@ -337,8 +269,8 @@ public class CGameManager : MonoBehaviour
             trains[i].Damage(true);
             damageTime = 0f;
             isDamage = true;
-            kms = 1f;
             firstTrainMoveEnd = false;
+            kms = 0f;
         }
 
         HPMinus();
@@ -356,24 +288,19 @@ public class CGameManager : MonoBehaviour
         }
     }
 
-    public void Finish()
+    public void GameOver()
     {
-        isMove = !isMove;
-        finish = true;
         bIsGameStart = false;
-
-
-        //JsonManager.Instance.SortUserList();
-        MessageDispatcher.SendMessage("ShowRank_End");
-
         CSoundManager.Instance.GameEndBgmPlay();
+        MessageDispatcher.SendMessage("ShowRank_End");
     }
+
 
     public float GetAveragedVolume()
     {
         float[] data = new float[256];
         float a = 0;
-        audioSource.GetOutputData(data, 0);
+        //audioSource.GetOutputData(data, 0);
         foreach (float s in data)
         {
             a += Mathf.Abs(s);
@@ -384,16 +311,12 @@ public class CGameManager : MonoBehaviour
     public void setPlay()
     {
         firstTrainMove = true;
+        isMove = true;
     }
 
     public void JumpPlay()
     {
-        bool jumping = false;
-        for (int i = 0; i < trains.Length; i++)
-        {
-            jumping = trains[i].IsJump();
-        }
-        if (!jumping)
+        if (!trains[0].IsJump())
         {
             trains[0].Jump();
             CSoundManager.Instance.PlaySFX(SoundSFX.Jump);
@@ -403,6 +326,15 @@ public class CGameManager : MonoBehaviour
     public void ChoCho()
     {
         trains[0].DangerShout();
+
+        GameObject go = CObjectPool.instance.GetObject(choChoEffect);
+        go.transform.position = choChoEffectPos.position;
+    }
+
+    public void SuccessEffect(Vector3 pos)
+    {
+        GameObject go = CObjectPool.instance.GetObject(successEffect);
+        go.transform.position = pos;
     }
 
     public void HPMinus()
@@ -410,7 +342,7 @@ public class CGameManager : MonoBehaviour
         HP--;
         if (HP < 0)
         {
-            Finish();
+            GameOver();
         }
         else
         {
@@ -422,4 +354,5 @@ public class CGameManager : MonoBehaviour
     {
         return GameTimer;
     }
+
 }

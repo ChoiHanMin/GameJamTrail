@@ -20,7 +20,7 @@ public class CField : MonoBehaviour, IMove
         textOb.SetActive(m % 100 == 0);
         mText.text = m +"M";
         CGameManager.Instance.AddMove(this);
-        finishOb.SetActive(finish);
+        //finishOb.SetActive(finish);
 
         preset = CObjectPool.instance.GetObject(presets[Random.Range(0, presets.Length)]);
         preset.transform.SetParent(transform);
